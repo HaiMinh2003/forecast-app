@@ -133,7 +133,9 @@
 
           results.data.slice(0, 300).forEach(row => {
             if (row['StockCode']) stockSet.add(row['StockCode'].trim());
-            if (row['Country']) countrySet.add(row['Country'].trim());
+            if (row['Country'] && isNaN(row['Country'].trim())) {
+  countrySet.add(row['Country'].trim());
+}
           });
 
           const productDropdown = document.getElementById('product');
