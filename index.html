@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,12 +15,6 @@
         <select class="form-select" id="product" required>
           <option selected disabled>Chọn mã sản phẩm...</option>
         </select>
-      </div>
-
-      <div class="mb-3">
-        <label for="dateRange" class="form-label">Khoảng thời gian phân tích</label>
-        <input type="month" id="startMonth" class="form-control mb-2" placeholder="Từ tháng">
-        <input type="month" id="endMonth" class="form-control" placeholder="Đến tháng">
       </div>
 
       <div class="mb-3">
@@ -130,7 +123,9 @@
     document.getElementById('csvFile').addEventListener('change', async function () {
       const file = this.files[0];
       const text = await file.text();
-      const rows = text.split('\n').slice(1).map(row => row.split(','));
+
+      const lines = text.split('\n').slice(1, 200);  // Giới hạn 200 dòng
+      const rows = lines.map(row => row.split(','));
 
       const stockSet = new Set();
       const countrySet = new Set();
