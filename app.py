@@ -1,21 +1,21 @@
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import pandas as pd
 from prophet import Prophet
 
 app = Flask(__name__)
-CORS(app)
+CORS(app)  # Cho phép mọi origin gọi đến API
 
 @app.route('/forecast', methods=['POST'])
 def forecast():
     file = request.files['file']
     stock_code = request.form['stockCode']
     country = request.form['country']
-    forecast_months = int(request.form['months'])
+    forecast_months = int(request.form['months']) 
 
     df = pd.read_csv(file, encoding='ISO-8859-1')
-    df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
+    df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], errors='coerce')
+    df.dropna(subset=['InvoiceDate', 'StockCode', 'Quantity', 'UnitPrice'], inplace=True)
     df['Month'] = df['InvoiceDate'].dt.to_period('M').dt.to_timestamp()
     df['Revenue'] = df['Quantity'] * df['UnitPrice']
 
