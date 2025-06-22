@@ -73,7 +73,7 @@
       formData.append('country', document.getElementById('country').value);
       formData.append('months', document.getElementById('forecastMonths').value);
 
-      const res = await fetch('http://localhost:5000/forecast', {
+      const res = await fetch('https://forecast-app-6f6x3.onrender.com/forecast', {
         method: 'POST',
         body: formData
       });
